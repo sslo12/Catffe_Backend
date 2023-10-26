@@ -75,5 +75,6 @@ public class ProductosController {
         } else {
             throw new CamposInvalidosException("Error! Asegúrate de que el nombre, la descripcion , el precio, y otros opcionales no estén vacíos.");
         }
+
     }
 }
