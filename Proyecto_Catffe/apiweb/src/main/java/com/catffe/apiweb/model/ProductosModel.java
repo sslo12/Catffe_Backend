@@ -29,7 +29,7 @@ public class ProductosModel {
     private int peso;
     private String genero;
     private String autor;
-    private List<ComboProducto> comboProductos;
+    private List<ComboProducto> combos = new ArrayList<>();
     public static class ComboProducto {
         private int productoId;
         private String nombre;

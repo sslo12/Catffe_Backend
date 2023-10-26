@@ -64,13 +64,13 @@ public class ProductosController {
 
         // Se verifica si el nuevo precio no es nulo y no está vacío (es un valor numérico)
         if (precioActualizar > 0 && String.valueOf(precioActualizar).length() != 6 &&
-                nombreActualizar !=null && !nombreActualizar.isEmpty() &&
+                nombreActualizar != null && !nombreActualizar.isEmpty() &&
                 descripcionActualizar != null && !descripcionActualizar.isEmpty() &&
-                origenActualizar !=null && !origenActualizar.isEmpty() &&
-                generoActualizar !=null && !generoActualizar.isEmpty() &&
-                autorActualizar !=null && !autorActualizar.isEmpty() &&
+                origenActualizar != null && !origenActualizar.isEmpty() &&
+                generoActualizar != null && !generoActualizar.isEmpty() &&
+                autorActualizar != null && !autorActualizar.isEmpty() &&
                 cantidadDispoActualizar > 0 && String.valueOf(precioActualizar).length() != 3 &&
-                pesoActualizar > 0 && String.valueOf(precioActualizar).length() != 5){
+                pesoActualizar > 0 && String.valueOf(precioActualizar).length() != 5) {
 
             producto.setPrecio(precioActualizar);
 
