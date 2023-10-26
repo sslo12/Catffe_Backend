@@ -52,9 +52,17 @@ public class ProductosController {
         ProductosModel producto = productosService.obtenerProductoPorId(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Error! No se encontró el producto con el ID " + id));
 
-        // Realiza las validaciones y actualizaciones necesarias en el producto
+        double precioActualizar = detallesProducto.getPrecio(precioActualizar);
 
-        productosService.actualizarProducto(producto);
-        return new ResponseEntity<String>("Producto actualizado exitosamente", HttpStatus.OK);
+        String nombre
+
+        if (precioActualizar != null && !precioActualizar.isEmpty()) {
+            producto.setPrecio(precioActualizar);
+
+            productosService.actualizarProducto(producto);
+            return new ResponseEntity<String>("El producto con el id: " + id + " fue actualizado exitosamente", HttpStatus.OK);
+        } else {
+            throw new CamposInvalidosException("Error! Asegúrate de que el nombre, la descripcion , el precio, y otros opcionales no estén vacíos.");
+        }
     }
 }
