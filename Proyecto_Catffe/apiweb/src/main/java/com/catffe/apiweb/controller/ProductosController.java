@@ -81,7 +81,6 @@ public class ProductosController {
             producto.setGenero(generoActualizar);
             producto.setAutor(autorActualizar);
             producto.setCantidadDispo(cantidadDispoActualizar);
-            producto.setPeso(pesoActualizar);
 
 
             // Finalmente, se guarda la actualización
