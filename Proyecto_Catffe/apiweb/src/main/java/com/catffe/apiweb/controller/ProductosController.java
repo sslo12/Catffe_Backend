@@ -59,9 +59,19 @@ public class ProductosController {
         String origenActualizar = detallesProducto.getOrigen();
         String generoActualizar = detallesProducto.getGenero();
         String autorActualizar = detallesProducto.getAutor();
+        int cantidadDispoActualizar = detallesProducto.getCantidadDispo();
+        int pesoActualizar = detallesProducto.getPeso();
 
         // Se verifica si el nuevo precio no es nulo y no está vacío (es un valor numérico)
-        if (precioActualizar > 0) {
+        if (precioActualizar > 0 && String.valueOf(precioActualizar).length() != 6 &&
+                nombreActualizar !=null && !nombreActualizar.isEmpty() &&
+                descripcionActualizar != null && !descripcionActualizar.isEmpty() &&
+                origenActualizar !=null && !origenActualizar.isEmpty() &&
+                generoActualizar !=null && !generoActualizar.isEmpty() &&
+                autorActualizar !=null && !autorActualizar.isEmpty() &&
+                cantidadDispoActualizar > 0 && String.valueOf(precioActualizar).length() != 3 &&
+                pesoActualizar > 0 && String.valueOf(precioActualizar).length() != 5){
+
             producto.setPrecio(precioActualizar);
 
             // Luego, se actualizan los demás atributos si es necesario, como nombre, descripción, origen, etc.
@@ -70,12 +80,15 @@ public class ProductosController {
             producto.setOrigen(origenActualizar);
             producto.setGenero(generoActualizar);
             producto.setAutor(autorActualizar);
+            producto.setCantidadDispo(cantidadDispoActualizar);
+            producto.setPeso(pesoActualizar);
 
 
             // Finalmente, se guarda la actualización
             productosService.actualizarProducto(producto);
             return new ResponseEntity<String>("El producto con el ID " + id + " fue actualizado exitosamente", HttpStatus.OK);
         } else {
-            throw new CamposInvalidosException("Error! Asegúrate de que el precio sea un número válido y mayor que 0.");
+            throw new CamposInvalidosException("Error! Asegúrate de que el nombre, la descripcion , el precio, y otros opcionales no estén vacíos.");
         }
     }
+}
