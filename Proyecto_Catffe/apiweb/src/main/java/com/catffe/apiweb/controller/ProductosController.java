@@ -52,17 +52,18 @@ public class ProductosController {
         ProductosModel producto = productosService.obtenerProductoPorId(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Error! No se encontró el producto con el ID " + id));
 
-        double precioActualizar = detallesProducto.getPrecio(precioActualizar);
+        double precioActualizar = detallesProducto.getPrecio();
 
         if (String.valueOf(precioActualizar).length() != 6) {
             throw new CamposInvalidosException("Error! El precio debe tener hasta 6 dígitos.");
         }
 
-        String nombreActualizar = detallesProducto.getNombre(nombreActualizar);
-        String descripcionActualizar = detallesProducto.getDescripcion(descripcionActualizar);
+        String nombreActualizar = detallesProducto.getNombre();
+        String descripcionActualizar = detallesProducto.getDescripcion();
 
 
-        if (nombreActualizar !=null && !nombreActualizar.isEmpty() && descripcionActualizar != null && !descripcionActualizar.isEmpty()) {
+        if (nombreActualizar !=null && !nombreActualizar.isEmpty() &&
+                descripcionActualizar != null && !descripcionActualizar.isEmpty()) {
 
             // Asignamos los valores que vamos a actualizar del producto
             producto.setNombre(nombreActualizar);
