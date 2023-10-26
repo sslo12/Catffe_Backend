@@ -2,7 +2,7 @@ package com.catffe.apiweb.controller;
 
 import com.catffe.apiweb.exception.RecursoNoEncontradoException;
 import com.catffe.apiweb.model.ProductosModel;
-import com.catffe.apiweb.model.VentasModel;
+import com.catffe.apiweb.model.VentaModel;
 import com.catffe.apiweb.service.IProductosService;
 import com.catffe.apiweb.service.IVentaService;
 import com.mongodb.BasicDBObject;
