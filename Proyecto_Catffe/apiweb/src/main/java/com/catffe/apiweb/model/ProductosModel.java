@@ -1,5 +1,6 @@
 package com.catffe.apiweb.model;
 
+import com.catffe.apiweb.enums.tipoleche;
 import com.mongodb.DBObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,8 +22,8 @@ public class ProductosModel {
     private String descripcion;
     private double precio;
     private String tipo;
-    private int C;
-    private String tipoLeche;
+    private int CantidadDispo;
+    private tipoleche tipoLeche;
     private String origen;
     private int peso;
     private String genero;
