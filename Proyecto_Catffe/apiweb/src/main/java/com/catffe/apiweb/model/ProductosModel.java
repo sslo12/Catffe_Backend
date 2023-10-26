@@ -2,6 +2,7 @@ package com.catffe.apiweb.model;
 
 import com.catffe.apiweb.enums.tipoleche;
 import com.catffe.apiweb.enums.tipo;
+import com.catffe.apiweb.enums.topping;
 import com.mongodb.DBObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class ProductosModel {
     private int cantidadDispo;
     private tipoleche tipoLeche;
     private String origen;
+    private topping topping;
     private int peso;
     private String genero;
     private String autor;

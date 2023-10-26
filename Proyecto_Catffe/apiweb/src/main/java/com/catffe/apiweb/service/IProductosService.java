@@ -18,7 +18,6 @@ public interface IProductosService {
 
     void agregarComboAlProducto(int productoId, ProductosModel.ComboProducto combo);
 
-    void agregarComboAlProducto(int productoId, ProductosModel.ComboProducto combo);
     List<ProductosModel.ComboProducto> listarCombosDelProducto(int productoId);
     void eliminarComboDelProducto(int productoId, int comboId);
     void actualizarComboDelProducto(int productoId, int comboId, ProductosModel.ComboProducto combo);
