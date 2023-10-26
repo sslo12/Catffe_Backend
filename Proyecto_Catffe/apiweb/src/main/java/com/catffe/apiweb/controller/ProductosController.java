@@ -52,18 +52,31 @@ public class ProductosController {
         ProductosModel producto = productosService.obtenerProductoPorId(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Error! No se encontró el producto con el ID " + id));
 
-        double precioActualizar = detallesProducto.getPrecio(precioActualizar);
+        // Se obtienen los nuevos valores de los atributos desde el objeto detallesProducto
+        double precioActualizar = detallesProducto.getPrecio();
+        String nombreActualizar = detallesProducto.getNombre();
+        String descripcionActualizar = detallesProducto.getDescripcion();
+        String origenActualizar = detallesProducto.getOrigen();
+        String generoActualizar = detallesProducto.getGenero();
+        String autorActualizar = detallesProducto.getAutor();
+        // Supongo que aquí deseas obtener los nuevos valores de comboProductos
 
-        String nombreActualizar = detallesProducto.getNombre(nombreActualizar);
-        String descripcionActualizar = detallesProducto.getDescripcion(descripcionActualizar);
-
-        if (precioActualizar != null && !precioActualizar.isEmpty()) {
+        // Se verifica si el nuevo precio no es nulo y no está vacío (es un valor numérico)
+        if (precioActualizar > 0) {
             producto.setPrecio(precioActualizar);
 
+            // Luego, se actualizan los demás atributos si es necesario, como nombre, descripción, origen, etc.
+            producto.setNombre(nombreActualizar);
+            producto.setDescripcion(descripcionActualizar);
+            producto.setOrigen(origenActualizar);
+            producto.setGenero(generoActualizar);
+            producto.setAutor(autorActualizar);
+            // Actualización de comboProductos si es necesario
+
+            // Finalmente, se guarda la actualización
             productosService.actualizarProducto(producto);
-            return new ResponseEntity<String>("El producto con el id: " + id + " fue actualizado exitosamente", HttpStatus.OK);
+            return new ResponseEntity<String>("El producto con el ID " + id + " fue actualizado exitosamente", HttpStatus.OK);
         } else {
-            throw new CamposInvalidosException("Error! Asegúrate de que el nombre, la descripcion , el precio, y otros opcionales no estén vacíos.");
+            throw new CamposInvalidosException("Error! Asegúrate de que el precio sea un número válido y mayor que 0.");
         }
     }
-}
