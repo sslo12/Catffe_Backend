@@ -83,7 +83,6 @@ public class ProductosController {
             producto.setCantidadDispo(cantidadDispoActualizar);
             producto.setPeso(pesoActualizar);
 
-
             // Finalmente, se guarda la actualización
             productosService.actualizarProducto(producto);
             return new ResponseEntity<String>("El producto con el ID " + id + " fue actualizado exitosamente", HttpStatus.OK);

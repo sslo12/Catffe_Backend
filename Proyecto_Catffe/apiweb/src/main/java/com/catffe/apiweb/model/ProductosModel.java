@@ -23,13 +23,17 @@ public class ProductosModel {
     private String descripcion;
     private double precio;
     private tipo tipo;
-    private int CantidadDispo;
+    private int cantidadDispo;
     private tipoleche tipoLeche;
     private String origen;
     private int peso;
     private String genero;
     private String autor;
-    private List<DBObject> ComboProductos = new ArrayList<>();
-
+    private List<ComboProducto> comboProductos;
+    public static class ComboProducto {
+        private int productoId;
+        private String nombre;
+    }
 }
+
 

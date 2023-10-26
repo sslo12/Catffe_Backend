@@ -2,6 +2,7 @@ package com.catffe.apiweb.service;
 
 import com.catffe.apiweb.model.ProductosModel;
 import com.catffe.apiweb.repository.IProductosRepository;
+import com.mongodb.DBObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,16 @@ public class ProductosServiceImp implements IProductosService {
     }
 
     @Override
+    public void restarProductos(List<DBObject> detalles) {
+
+    }
+
+    @Override
+    public boolean verificarDisponibilidad(List<DBObject> detalles) {
+        return false;
+    }
+
+    @Override
     public void eliminarProductoPorId(int productoId) {
         productosRepository.deleteById(productoId);
     }
@@ -40,6 +51,5 @@ public class ProductosServiceImp implements IProductosService {
 
     @Override
     public Optional<ProductosModel> obtenerProductoPorId(int productoId) {
-        return productosRepository.findById(productoId);
-    }
+        return productosRepository.findById(productoId);}
 }
