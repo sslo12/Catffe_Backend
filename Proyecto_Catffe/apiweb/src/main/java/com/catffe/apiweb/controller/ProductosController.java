@@ -54,12 +54,21 @@ public class ProductosController {
 
         double precioActualizar = detallesProducto.getPrecio(precioActualizar);
 
+        if (String.valueOf(precioActualizar).length() != 6) {
+            throw new CamposInvalidosException("Error! El precio debe tener hasta 6 dígitos.");
+        }
+
         String nombreActualizar = detallesProducto.getNombre(nombreActualizar);
         String descripcionActualizar = detallesProducto.getDescripcion(descripcionActualizar);
 
-        if (precioActualizar != null && !precioActualizar.isEmpty()) {
-            producto.setPrecio(precioActualizar);
 
+        if (nombreActualizar !=null && !nombreActualizar.isEmpty() && descripcionActualizar != null && !descripcionActualizar.isEmpty()) {
+
+            // Asignamos los valores que vamos a actualizar del producto
+            producto.setNombre(nombreActualizar);
+            producto.setDescripcion(descripcionActualizar);
+
+            // Guardamos los cambios
             productosService.actualizarProducto(producto);
             return new ResponseEntity<String>("El producto con el id: " + id + " fue actualizado exitosamente", HttpStatus.OK);
         } else {
