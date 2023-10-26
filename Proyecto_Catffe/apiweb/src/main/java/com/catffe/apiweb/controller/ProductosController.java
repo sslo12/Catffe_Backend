@@ -54,7 +54,8 @@ public class ProductosController {
 
         double precioActualizar = detallesProducto.getPrecio(precioActualizar);
 
-        String nombre
+        String nombreActualizar = detallesProducto.getNombre(nombreActualizar);
+        String descripcionActualizar = detallesProducto.getDescripcion(descripcionActualizar);
 
         if (precioActualizar != null && !precioActualizar.isEmpty()) {
             producto.setPrecio(precioActualizar);
