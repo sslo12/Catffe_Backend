@@ -533,7 +533,7 @@ db.venta.insertMany([
       }
     ],
     precio_total: 85.55
-  },
+  }
 ]);
 
 
