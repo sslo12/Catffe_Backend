@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/catffe/productos")
@@ -59,7 +59,7 @@ public class ProductosController {
         String origenActualizar = detallesProducto.getOrigen();
         String generoActualizar = detallesProducto.getGenero();
         String autorActualizar = detallesProducto.getAutor();
-        int cantidadDispoActualizar = detallesProducto.getCantidadDispo();
+        int cantidadDispoActualizar = detallesProducto.getCantidad_dispo();
         int pesoActualizar = detallesProducto.getPeso();
 
         // Se verifica si el nuevo precio no es nulo y no está vacío (es un valor numérico)
@@ -75,7 +75,7 @@ public class ProductosController {
             producto.setOrigen(origenActualizar);
             producto.setGenero(generoActualizar);
             producto.setAutor(autorActualizar);
-            producto.setCantidadDispo(cantidadDispoActualizar);
+            producto.setCantidad_dispo(cantidadDispoActualizar);
             producto.setPeso(pesoActualizar);
 
             // Finalmente, se guarda la actualización
@@ -84,5 +84,26 @@ public class ProductosController {
         } else {
             throw new CamposInvalidosException("Error! Asegúrate de que el nombre, la descripcion , el precio, y otros opcionales no estén vacíos.");
         }
+    }
+
+    @GetMapping("/stock")
+    public ResponseEntity<List<Map<String, Object>>> obtenerStockDeProductos() {
+        List<ProductosModel> productos = productosService.listarProductos();
+
+        List<Map<String, Object>> stockInfoList = new ArrayList<>();
+
+        for (ProductosModel producto : productos) {
+            Map<String, Object> stockInfo = new HashMap<>();
+            stockInfo.put("tipo", producto.getTipo().toString()); // Convertir el enumerado a cadena
+            stockInfo.put("nombre", producto.getNombre());
+            stockInfo.put("cantidadDispo", producto.getCantidad_dispo());
+
+            stockInfoList.add(stockInfo);
+        }
+
+        // Ordenar la lista por tipo
+        stockInfoList.sort((a, b) -> ((String) a.get("tipo")).compareTo((String) b.get("tipo")));
+
+        return new ResponseEntity<>(stockInfoList, HttpStatus.OK);
     }
 }

@@ -24,7 +24,7 @@ public class ProductosModel {
     private String descripcion;
     private double precio;
     private tipo tipo;
-    private int cantidadDispo;
+    private int cantidad_dispo;
     private tipoleche tipoLeche;
     private String origen;
     private topping topping;

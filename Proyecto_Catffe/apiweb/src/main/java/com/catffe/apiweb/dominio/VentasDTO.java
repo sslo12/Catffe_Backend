@@ -12,7 +12,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VentasDTO {
-    private int id;
+    private int id_venta;
     private Date fecha_hora;
     private int cliente_id;
     private int trabajador_id;

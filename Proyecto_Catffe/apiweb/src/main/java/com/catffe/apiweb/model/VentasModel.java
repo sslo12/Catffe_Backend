@@ -8,14 +8,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-
 @Document("venta")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class VentasModel {
     @Id
-    private int id;
+    private int id_venta;
     private Date fecha_hora;
     private int cliente_id;
     private int trabajador_id;

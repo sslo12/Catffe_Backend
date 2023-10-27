@@ -6,71 +6,68 @@ import com.catffe.apiweb.model.ProductosModel;
 import com.catffe.apiweb.model.VentasModel;
 import com.catffe.apiweb.service.IProductosService;
 import com.catffe.apiweb.service.IVentaService;
-import  org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/catffe/ventas")
 public class VentasController {
-
     @Autowired
-    private IVentaService ventaService;
-
+    IVentaService ventaService;
     @Autowired
     IProductosService productosService;
 
     @PostMapping("/insert")
     public ResponseEntity<String> crearVenta(@RequestBody VentasDTO ventadto) {
-        VentasModel ventas = new VentasModel ();
-        ventas.setId(ventadto.getId());
-        ventas.setFecha_hora(ventadto.getFecha_hora());
+        VentasModel ventas = new VentasModel();
+        //ventas.setId_venta(ventadto.getId_venta());
+        Date fecha_hora = new Date();
         ventas.setCliente_id(ventadto.getCliente_id());
         ventas.setTrabajador_id(ventadto.getTrabajador_id());
 
-        //Garantizar que existan productos y cantidades del detalle de la venta, si existen
+        // Validar la existencia y disponibilidad del producto
         List<Map<String, Integer>> detalles = ventadto.getDetalles();
-        ProductosModel producto = new ProductosModel();
-        int IdProducto;
-        int cantidad;
-        for (int i = 0 ; i < detalles.size() ; i++) {
-            IdProducto = detalles.get(i).get("id_producto");
-            producto = this.productosService.obtenerProductoPorId(IdProducto).orElseThrow(()-> new RecursoNoEncontradoException("El producto no existe") );
-            cantidad = detalles.get(i).get("cantidad");
-                    if (producto != null && cantidad <= producto.getCantidadDispo()) {
+        for (Map<String, Integer> item : detalles) {
+            int idProducto = item.get("id_producto");
+            int cantidadSolicitada = item.get("cantidad");
 
-                        //En el objeto de detalle adicionar el id de Venta
-                        int CantidadActual = producto.getCantidadDispo();
-                        double productoPrecio = producto.getPrecio();
-
-                        producto.setCantidadDispo(CantidadActual - cantidad);
-                        productosService.actualizarProducto(producto);
-
-                        double totalPrecioProducto = productoPrecio * cantidad;
-                        double TotalPrecioActual = ventadto.getPrecio_total();
-
-                        ventadto.setPrecio_total(TotalPrecioActual + totalPrecioProducto);
-                        ventadto.setPrecio_total(ventadto.getPrecio_total());
-                        ventaService.guardarVenta(ventas);
-
-                        ProductosModel nuevodetalle = new ProductosModel();
-
-                        nuevodetalle.setId(producto.getId());
-                        nuevodetalle.setCantidadDispo(CantidadActual);
-
-                        System.out.print("id_producto " + IdProducto);
-                        System.out.print("cantidad " + cantidad);
-                        System.out.print("precio_total " + ventadto.getPrecio_total());
-                    }
-                }
-                // De shoppingCart recuperar cada detalle de compra
-                // Si no existen productos o cantidades del detalle de la venta, retornar un error
-                return new ResponseEntity<String>(ventaService.guardarVenta(ventas),HttpStatus.OK);
+            ProductosModel producto = this.productosService.obtenerProductoPorId(idProducto).orElse(null);
+            if (producto == null) {
+                return new ResponseEntity<String>("Producto no encontrado para el ID proporcionado", HttpStatus.BAD_REQUEST);
             }
+
+            if (cantidadSolicitada > producto.getCantidad_dispo()) {
+                return new ResponseEntity<String>("Cantidad insuficiente del producto en stock", HttpStatus.BAD_REQUEST);
+            }
+
+            // Resto de la lógica de procesamiento de ventas
+            int CantidadActual = producto.getCantidad_dispo();
+            double productoPrecio = producto.getPrecio();
+
+            producto.setCantidad_dispo(CantidadActual - cantidadSolicitada);
+            productosService.actualizarProducto(producto);
+
+            double totalPrecioProducto = productoPrecio * cantidadSolicitada;
+
+            double TotalPrecioActual = ventadto.getPrecio_total();
+            ventadto.setPrecio_total(TotalPrecioActual + totalPrecioProducto);
+            ventadto.setPrecio_total(ventadto.getPrecio_total());
+
+            ProductosModel nuevodetalle = new ProductosModel();
+            nuevodetalle.setId(idProducto);
+            nuevodetalle.setCantidad_dispo(CantidadActual);
+        }
+
+        // Insertar el objeto ventas en la colección "venta"
+        ventaService.crearVenta(ventas);
+        return new ResponseEntity<String>("La venta se ha creado con éxito", HttpStatus.OK);
+    }
 
     @GetMapping("/todas/listar")
     public ResponseEntity<List<VentasModel>>listarVentas(){
@@ -79,10 +76,10 @@ public class VentasController {
 
     @GetMapping ("/find/{id}")
     public ResponseEntity<VentasModel>obtenerVentaPorId(@PathVariable int id){
-        VentasModel venta = ventaService.obtenerVentaPorId(id).
+        VentasModel ventas = ventaService.obtenerVentaPorId(id).
                 orElseThrow(()->new RecursoNoEncontradoException("Error: no se encontró la venta con el ID " +id));
 
-        return ResponseEntity.ok(venta);
+        return ResponseEntity.ok(ventas);
     }
 
     @DeleteMapping ("/delete/{id}")
@@ -90,7 +87,7 @@ public class VentasController {
         VentasModel venta = ventaService.obtenerVentaPorId(id).
                 orElseThrow(()-> new RecursoNoEncontradoException("Error: no se encontró la venta con el ID " +id));
 
-        return new ResponseEntity<String>(ventaService.eliminarVentaPorId(venta.getId()),HttpStatus.OK);
+        return new ResponseEntity<String>(ventaService.eliminarVentaPorId(venta.getId_venta()),HttpStatus.OK);
     }
 
 }
