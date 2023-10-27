@@ -2,6 +2,7 @@ package com.catffe.apiweb.dominio;
 
 import com.catffe.apiweb.model.VentasModel;
 import com.catffe.apiweb.repository.IVentasRepository;
+import com.catffe.apiweb.service.IVentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
