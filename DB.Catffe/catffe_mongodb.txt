@@ -126,8 +126,7 @@ db.createCollection('productos',{
 					items:{
 						title: 'object',
 						properties:{
-							producto_id:{bsonType: 'int'},
-							nombre:{bsonType: 'string'}
+							producto_id:{bsonType: 'int'}
 						}
 					}
 				}
