@@ -3,7 +3,7 @@ package com.catffe.apiweb.model;
 import com.catffe.apiweb.enums.tipoleche;
 import com.catffe.apiweb.enums.tipo;
 import com.catffe.apiweb.enums.topping;
-import com.mongodb.DBObject;
+import org.bson.types.ObjectId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,11 +31,7 @@ public class ProductosModel {
     private int peso;
     private String genero;
     private String autor;
-    private List<ComboProducto> combos = new ArrayList<>();
-    public static class ComboProducto {
-        private int productoId;
-        private String nombre;
-    }
+    private List<String> comboProductos;  // Cambio en la definición de comboProductos
 }
 
 

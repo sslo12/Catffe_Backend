@@ -37,27 +37,13 @@ public class ProductosServiceImp implements IProductosService {
     @Override
     public boolean verificarDisponibilidad(List<DBObject> detalles) {
         return false;
-    }
-
-    @Override
-    public void agregarComboAlProducto(int productoId, ProductosModel.ComboProducto combo) {
 
     }
-
-    @Override
-    public List<ProductosModel.ComboProducto> listarCombosDelProducto(int productoId) {
-        return null;
-    }
-
     @Override
     public void eliminarComboDelProducto(int productoId, int comboId) {
 
     }
 
-    @Override
-    public void actualizarComboDelProducto(int productoId, int comboId, ProductosModel.ComboProducto combo) {
-
-    }
 
     @Override
     public void eliminarProductoPorId(int productoId) {

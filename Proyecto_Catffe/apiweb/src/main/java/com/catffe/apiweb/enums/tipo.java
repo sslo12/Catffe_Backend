@@ -5,6 +5,6 @@ public enum tipo {
     cafe,
     toppings,
     libro,
-    combo
+    combos
 }
 
