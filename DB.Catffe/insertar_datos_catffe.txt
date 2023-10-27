@@ -1,0 +1,539 @@
+db.cliente.insertMany([
+    {
+		_id:1000,
+        identificacion: 1002632848,
+        nombre: "Juan",
+        apellido: "Pérez",
+        correo: "juan@gmail.com",
+        telefono: 123456789,
+        fechaNacimiento: new Date("2002-01-01"),
+        mascotas: [
+            {
+                nombreMascota: "Fido",
+                mascota_Id: 101
+            }
+        ]
+    },
+    {
+		_id:1010,
+        identificacion: 1004577732,
+        nombre: "María",
+        apellido: "López",
+        correo: "maria@gamil.com",
+        telefono: 987654321,
+        fechaNacimiento: new Date("1999-05-15"),
+        mascotas: [
+            {
+                nombreMascota: "Whiskers",
+                mascota_Id: 102
+            },
+            {
+                nombreMascota: "Buddy",
+                mascota_Id: 103
+            }
+        ]
+    },
+    {
+		_id:1011,
+        identificacion: 1007234435,
+        nombre: "Carlos",
+        apellido: "Gómez",
+        correo: "c.gomez@gmail.com",
+        telefono: 125535555,
+        fechaNacimiento: new Date("1995-07-20")
+    },
+    {
+		_id:1012,
+        identificacion: 1053765338,
+        nombre: "Laura",
+        apellido: "Martínez",
+        correo: "laura_12@gmail.com",
+        telefono: 137774777,
+        fechaNacimiento: new Date("2000-12-10"),
+        mascotas: [
+            {
+                nombreMascota: "Mitty",
+                mascota_Id: 104
+            }
+        ]
+    },
+    {
+		_id:1013,
+        identificacion: 1018431380,
+        nombre: "Pedro",
+        apellido: "Ramírez",
+        correo: "pedro.r@gmail.com",
+        telefono: 109992949,
+        fechaNacimiento: new Date("1998-03-25"),
+        mascotas: [
+            {
+                nombreMascota: "Max",
+                mascota_Id: 105
+            },
+            {
+                nombreMascota: "Lucy",
+                mascota_Id: 106
+            }
+        ]
+    },
+	{
+		_id:1014,
+        identificacion: 1013762328,
+        nombre: "Anastasia",
+        apellido: "Castillo",
+        correo: "ana.castillo@gmail.com",
+        telefono: 116395890,
+        fechaNacimiento: new Date("2003-06-23"),
+        mascotas: [
+            {
+                nombreMascota: "coco",
+                mascota_Id: 107
+            }
+        ]
+    }
+])
+
+
+
+
+
+
+
+db.mascota.insertMany([
+    {
+        _id:101,
+        nombre: "Fido",
+        color: "marron",
+        raza: "labrador",
+        fechaNac: new Date("2015-08-10"),
+        cliente_id: 1000,
+        especie: "perro"
+    },
+    {
+        _id:102,
+        nombre: "Whiskers",
+        color: "blanco y negro",
+        raza: "siames",
+        fechaNac: new Date("2018-04-05"),
+        cliente_id: 1010,  
+        especie: "gato"
+    },
+    {
+        _id:103,
+        nombre: "Buddy",
+        color: "blanco",
+        raza: "golden retriever",
+        fechaNac: new Date("2017-12-20"),
+        cliente_id: 1010, 
+        especie: "perro"
+    },
+    {
+        _id:104,
+        nombre: "Mitty",
+        color: "gris",
+        raza: "persa",
+        fechaNac: new Date("2019-02-15"),
+        cliente_id: 1012, 
+        especie: "gato"
+    },
+    {
+        _id:105,
+        nombre: "Max",
+        color: "blanco y negro",
+        raza: "husky siberiano",
+        fechaNac: new Date("2020-06-30"),
+        cliente_id: 1013, 
+        especie: "perro"
+    },
+    {
+        _id:106,
+        nombre: "Lucy",
+        color: "chocolate",
+        raza: "balines",
+        fechaNac: new Date("2022-10-22"),
+        cliente_id: 1013, 
+        especie: "gato"
+    },
+    {
+        _id:107,
+        nombre: "coco",
+        color: "naranja",
+        raza: "americano",
+        fechaNac: new Date("2019-07-03"),
+        cliente_id: 1014, 
+        especie: "gato"
+    }
+])
+
+
+
+
+
+
+
+db.trabajador.insertMany([
+    {
+        _id:3100,
+        identificacion: 34528262,
+        nombre: "Antonella",
+        apellido: "Garcia",
+        credenciales: [
+            {
+                usuario: "an_garcia",
+                tipo_usuario: "administrador",
+                contraseña: "1234"
+            }
+        ]
+    },
+    {
+        _id:3101,
+        identificacion: 10256615,
+        nombre: "Martin",
+        apellido: "Diaz",
+        credenciales: [
+            {
+                usuario: "martin_d",
+                tipo_usuario: "administrador",
+                contraseña: "5678"
+            }
+        ]
+    },
+    {
+        _id:3102,
+        identificacion: 10521362,
+        nombre: "Emily",
+        apellido: "Carvajal",
+        credenciales: [
+            {
+                usuario: "emy_carvj",
+                tipo_usuario: "trabajador",
+                contraseña: "0105"
+            }
+        ]
+    },
+    {
+        _id:3103,
+        identificacion: 2899818,
+        nombre: "Andres",
+        apellido: "Peña",
+        credenciales: [
+            {
+                usuario: "a_peña",
+                tipo_usuario: "trabajador",
+                contraseña: "9077"
+            }
+        ]
+    },
+    {
+        _id:3104,
+        identificacion: 3014070,
+        nombre: "Sofía",
+        apellido: "Giraldo",
+        credenciales: [
+            {
+                usuario: "sof_g",
+                tipo_usuario: "trabajador",
+                contraseña: "4321"
+            }
+        ]
+    },
+    {
+        _id:3105,
+        identificacion: 3014070,
+        nombre: "Daniel",
+        apellido: "Medina",
+        credenciales: [
+            {
+                usuario: "dan_md",
+                tipo_usuario: "trabajador",
+                contraseña: "0987"
+            }
+        ]
+    }
+])
+
+
+
+
+
+
+
+
+db.productos.insertMany([
+    {
+        _id: 5101,
+        nombre: "Expreso",
+        descripcion: "Café expreso simple y delicioso.",
+        precio: 10.50,
+        tipo: "bebida"
+    },
+    {
+        _id: 5102,
+        nombre: "Macchiato",
+        descripcion: "Café expreso con una pizca de leche.",
+        precio: 13.90,
+        tipo: "bebida",
+        tipo_leche: "leche entera"
+    },
+    {
+        _id: 5103,
+        nombre: "Capuchino",
+        descripcion: "Café con leche y chocolate.",
+        precio: 15.45,
+        tipo: "bebida",
+        tipo_leche: "leche descremada"
+    },
+    {
+        _id: 5104,
+        nombre: "Frappé",
+        descripcion: "Café frío con hielo y crema de leche.",
+        precio: 17.80,
+        tipo: "bebida",
+        tipo_leche: "leche deslactosada"
+    },
+    {
+        _id: 5201,
+        nombre: "Café Colombiano 250g",
+        descripcion: "Café en bolsa de 250g para preparar en casa.",
+        precio: 9.90,
+        tipo: "cafe",
+        cantidad_dispo: 220,
+        origen: "Colombia",
+        peso: 250
+    },
+    {
+        _id: 5202,
+        nombre: "Café brasileño 500g",
+        descripcion: "Café en bolsa de 500g para los amantes del café.",
+        precio: 15.95,
+        tipo: "cafe",
+        cantidad_dispo: 150,
+        origen: "Brasil",
+        peso: 500
+    },
+    {
+        _id: 5203,
+        nombre: "Café etiopia 1000g",
+        descripcion: "Café en bolsa de 1000g para compartir.",
+        precio: 18.55,
+        tipo: "cafe",
+        cantidad_dispo: 100,
+        origen: "Etiopia",
+        peso: 1000
+    },
+    {
+        _id: 5301,
+        nombre: "Caramelo",
+        descripcion: "Jarabe o trozos de caramelo para endulzar tu café.",
+        precio: 2.50,
+        tipo: "toppings",
+        cantidad_dispo: 20
+    },
+    {
+        _id: 5302,
+        nombre: "Almendra",
+        descripcion: "Jarabe de almendra o extracto de almendra.",
+        precio: 4.25,
+        tipo: "toppings",
+        cantidad_dispo: 45
+    },
+    {
+        _id: 5303,
+        nombre: "Malvavisco",
+        descripcion: "Malvaviscos o crema de malvavisco.",
+        precio: 5.50,
+        tipo: "toppings",
+        cantidad_dispo: 100
+    },
+    {
+        _id: 5304,
+        nombre: "Licor",
+        descripcion: "Opciones de licor para añadir sofisticación a tu café.",
+        precio: 6.50,
+        tipo: "toppings",
+        cantidad_dispo: 65
+    },
+    {
+        _id: 5401,
+        nombre: "El Resplandor",
+        descripcion: "Una novela de terror psicológico de Stephen King.",
+        precio: 45.00,
+        tipo: "libros",
+        cantidad_dispo: 10,
+        genero: "terror",
+        autor: "Stephen King"
+    },
+    {
+        _id: 5402,
+        nombre: "El Código Da Vinci",
+        descripcion: "Un thriller de misterio de Dan Brown.",
+        precio: 60.00,
+        tipo: "libros",
+        cantidad_dispo: 12,
+        genero: "misterio",
+        autor: "Dan Brown"
+    },
+    {
+        _id: 5403,
+        nombre: "Bajo el Sol de la Toscana",
+        descripcion: "Una historia de amor y renovación en Italia",
+        precio: 30.00,
+        tipo: "libros",
+        cantidad_dispo: 15,
+        genero: "romance",
+        autor: "Frances Mayes"
+    },
+    {
+        _id: 5404,
+        nombre: "Elogio del gato",
+        descripcion: "La asimilación del escritor con el gato es un clásico en literatura.",
+        precio: 43.90,
+        tipo: "libros",
+        cantidad_dispo: 5,
+        genero: "narrativa",
+        autor: "Stephanie Hochet"
+    },
+    {
+        _id: 5501,
+        nombre: "Combo amore",
+        descripcion: "Frappe de cafe + Almendra + Bajo el Sol de la Toscana",
+        precio: 45.00,
+        tipo: "combos",
+        combos_productos: [
+            { producto_id: 5104, nombre: "Frappé" },
+            { producto_id: 5302, nombre: "Almendra" },
+            { producto_id: 5403, nombre: "Bajo el Sol de la Toscana" }
+        ]
+    },
+    {
+        _id: 5502,
+        nombre: "Combo boo",
+        descripcion: "Café Colombiano 250g + Malvavisco + El Resplandor",
+        precio: 54.99,
+        tipo: "combos",
+        combos_productos: [
+            { producto_id: 5201, nombre: "Café Colombiano 250g" },
+            { producto_id: 5303, nombre: "Malvavisco" },
+            { producto_id: 5401, nombre: "El Resplandor" }
+        ]
+    },
+    {
+        _id: 5503,
+        nombre: "Combo delicius",
+        descripcion: "Café cappuccino + Licor + Elogio del gato",
+        precio: 68.50,
+        tipo: "combos",
+        combos_productos: [
+            { producto_id: 5103, nombre: "Cappuccino" },
+            { producto_id: 5304, nombre: "Licor" },
+            { producto_id: 5404, nombre: "Elogio del gato" }
+        ]
+    }
+])
+
+
+
+
+
+
+
+
+db.venta.insertMany([
+  {
+    _id: 1,
+    fecha_hora: new Date(),
+    cliente_id: 1000,
+    trabajador_id: 3103,
+    detalles: [
+      {
+        id_producto: 5101,
+        nombre: "Expreso",
+        cantidad: 2
+      },
+      {
+        id_producto: 5102,
+        nombre: "Macchiato",
+        cantidad: 3
+      }
+    ],
+    precio_total: 89.50
+  },
+  {
+    _id: 2,
+    fecha_hora: new Date(),
+    cliente_id: 1010,
+    trabajador_id: 3102,
+    detalles: [
+      {
+        id_producto: 5103,
+        nombre: "Capuchino",
+        cantidad: 1
+      },
+      {
+        id_producto: 5104,
+        nombre: "Frappé",
+        cantidad: 2
+      }
+    ],
+    precio_total: 46.75
+  },
+  {
+    _id: 3,
+    fecha_hora: new Date(),
+    cliente_id: 1011,
+    trabajador_id: 3104,
+    detalles: [
+      {
+        id_producto: 5503,
+        nombre: "Combo delicius",
+        cantidad: 1
+      },
+      {
+        id_producto: 5502,
+        nombre: "Combo boo",
+        cantidad: 2
+      }
+    ],
+    precio_total: 180.75
+  },
+  {
+    _id: 4,
+    fecha_hora: new Date(),
+    cliente_id: 1012,
+    trabajador_id: 3105,
+    detalles: [
+      {
+        id_producto: 5201,
+        nombre: "Café Colombiano 250g",
+        cantidad: 2
+      },
+      {
+        id_producto: 5202,
+        nombre: "Café brasileño 500g",
+        cantidad: 1
+      }
+    ],
+    precio_total: 75.45
+  },
+  {
+    _id: 5,
+    fecha_hora: new Date(),
+    cliente_id: 1012,
+    trabajador_id: 3105,
+    detalles: [
+      {
+        id_producto: 5201,
+        nombre: "Café Colombiano 250g",
+        cantidad: 2
+      },
+      {
+        id_producto: 5203,
+        nombre: "Café etiopia 1000g",
+        cantidad: 1
+      }
+    ],
+    precio_total: 85.55
+  },
+]);
+
+

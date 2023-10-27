@@ -1,0 +1,137 @@
+use('catfe');
+
+db.createCollection('cliente',{
+    validator:{
+        $jsonSchema:{
+            bsonType:'object',
+            title:'cliente',
+            required:['identificacion', 'nombre', 'apellido', 'correo', 'telefono', 'fechaNacimiento'],
+            properties:{
+                identificacion:{bsonType:'int'},
+                nombre:{bsonType:'string'},
+                apellido:{bsonType: 'string'},
+                correo:{bsonType: 'string'},
+                telefono:{bsonType: 'int'},
+                fechaNacimiento:{bsonType: 'date'},
+                mascotas:{
+                    bsonType: 'array',
+                    items:{
+                        title: 'object',
+                        properties:{
+                            nombreMascota:{bsonType: 'string'},
+                            mascota_Id:{bsonType: 'int'}  
+                        }
+                    }
+                }
+            }
+        }
+    }
+})
+
+db.createCollection('mascota',{
+    validator:{
+        $jsonSchema:{
+            bsonType: 'object',
+            title: 'mascota',
+            required:['nombre', 'color', 'raza', 'fechaNac', 'cliente_id', 'especie'],
+            properties:{
+                nombre:{bsonType: 'string'},
+                color:{bsonType: 'string'},
+                raza:{bsonType: 'string'},
+                fechaNac:{bsonType: 'date'},
+                cliente_id:{bsonType: 'int'},  
+                especie:{bsonType: 'string'}
+            }
+        }
+    }
+})
+
+
+db.createCollection('trabajador',{
+    validator:{
+        $jsonSchema:{
+            bsonType: 'object',
+            title: 'trabajador',
+            required:['identificacion', 'nombre', 'apellido', 'credenciales'],
+            properties:{
+                identificacion:{bsonType: 'int'},
+                nombre:{bsonType: 'string'},
+                apellido:{bsonType: 'string'},
+                credenciales:{
+                    bsonType: 'array',
+                    items:{
+                        title: 'object',
+                        properties:{
+                            usuario:{bsonType: 'string'},
+                            tipo_usuario:{enum: ['administrador', 'trabajador']},
+                            contraseña:{bsonType:'string'}
+                        }
+                    }
+                }
+            }
+        }
+    }
+})
+
+
+db.createCollection('venta',{
+     validator:{
+        $jsonSchema:{
+            bsonType: 'object',
+            title: 'venta',
+            required:['fecha_hora', 'cliente_id', 'trabajador_id', 'detalles', 'precio_total'],
+            properties:{
+                fecha_hora:{bsonType: 'date'},
+                cliente_id:{bsonType: 'int'},
+                trabajador_id:{bsonType: 'int'},
+                detalles:{
+                    bsonType: 'array',
+                    items:{
+                        title: 'object',
+                        required:['id_producto', 'nombre', 'cantidad'],
+                        properties:{
+                            id_producto:{bsonType: 'int'},
+                            nombre:{bsonType: 'string'},
+                            cantidad:{bsonType: 'int'}
+                        }
+                    }
+                },
+                precio_total:{bsonType: 'double'}
+            }
+        }
+    }
+})
+
+
+
+db.createCollection('productos',{
+	validator:{
+		$jsonSchema:{
+			bsonType:'object',
+			title:'productos',
+			required:['nombre', 'descripcion', 'precio', 'tipo'],
+			properties:{
+				nombre:{bsonType:'string'},
+				descripcion:{bsonType:'string'},
+				precio:{bsonType: 'double'},
+				tipo:{enum: ['bebida', 'cafe', 'toppings', 'libros', 'combos']},
+				cantidad_dispo:{bsonType: 'int'},
+				tipo_leche:{enum: ['leche entera', 'leche descremada', 'leche deslactosada']},
+				origen:{bsonType: 'string'},
+                		peso:{bsonType: 'int'},
+                		genero:{bsonType: 'string'},
+                		autor:{bsonType: 'string'},
+				combos_productos:{
+					bsonType: 'array',
+					items:{
+						title: 'object',
+						properties:{
+							producto_id:{bsonType: 'int'},
+							nombre:{bsonType: 'string'}
+						}
+					}
+				}
+			}
+		}
+	}
+})
