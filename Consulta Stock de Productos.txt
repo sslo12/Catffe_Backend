@@ -1,6 +1,6 @@
-Nombres: Shirley Stefany Lombana. Maria Jose Clavijo Rojas.
+Nombres Integrantes: Shirley Stefany Lombana, Maria Jose Clavijo Rojas, Santiago Valencia Rosero, Vanessa Suarez, Juan Camilo Buitrago, Paola Andrea Chaux.
 
-Realizar una consulta que permita recuperar cuál es el estado de todos los productos respecto a su stock. La información que deberá ser visualizada es: nombre de la categoría, nombre del producto y cantidad (stock). Los datos visualizados deberán estar ordenados por nombre de categoría.
+1. Realizar una consulta que permita recuperar cuál es el estado de todos los productos respecto a su stock. La información que deberá ser visualizada es: nombre de la categoría, nombre del producto y cantidad (stock). Los datos visualizados deberán estar ordenados por nombre de categoría.
 
 Dentro de la clase ProductosController, hemos implementado una solicitud GET dirigidas a la ruta "/stock". Esta operacion devuelve información detallada sobre el estado del stock de productos en forma de una lista.
 
@@ -24,3 +24,17 @@ Dentro de la clase ProductosController, hemos implementado una solicitud GET dir
 
         return new ResponseEntity<>(stockInfoList, HttpStatus.OK);
     }
+2. Realizar una consulta que permita recuperar todas las ventas realizadas por un funcionario. La información que deberá ser visualizada es: Información general de la venta, detalles de la venta (producto y cantidades) y monto de las mismas. Estos resultados deberán estar ordenados por fecha.
+
+@GetMapping("/porTrabajador/{trabajadorId}")
+    public ResponseEntity<List<VentasModel>> obtenerVentasPorTrabajador(@PathVariable int trabajadorId) {
+        List<VentasModel> ventas = ventasService.obtenerVentasPorTrabajador(trabajadorId);
+        if(ventas.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(ventas, HttpStatus.OK);
+    }
+
+3. Realizar una consulta que permita recuperar todas las ventas realizadas en un día. La información que se deberá ser visualizada es: código de la venta, funcionario que la gestionó, cliente que la realizó, monto y detalles de la venta (producto y cantidades).
+
+
