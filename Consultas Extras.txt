@@ -41,10 +41,109 @@ By: Santiago Valencia Rosero, Paola Andrea Chaux.
 By:  Vanessa Suarez, Juan Camilo Buitrago
 3. Realizar una consulta que permita recuperar todas las ventas realizadas en un día. La información que se deberá ser visualizada es: código de la venta, funcionario que la gestionó, cliente que la realizó, monto y detalles de la venta (producto y cantidades).
 
-    @GetMapping("/todas/listar")
-    public ResponseEntity<List<VentasModel>> listarVentas(){
-        return new ResponseEntity<List<VentasModel>>(ventasService.listarVentas(), HttpStatus.OK);
+//ventasController
+    @GetMapping("/por-dia")
+    public List<VentasPorDia> getVentasPorDia() {
+        // Llama al servicio para obtener las ventas agrupadas por día.
+        return ventasService.getVentasAgrupadasPorDia();
     }
 
+//VentasPorDia
+
+package com.catffe.apiweb.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class VentasPorDia {
+    private String fecha; // La fecha en formato 'YYYY-MM-DD'
+    private List<VentasModel> ventas;
+    public VentasPorDia(Date fecha_hora, List<VentasModel> ventas) {
+    }
+}
+
+
+//ventasRepository
+package com.catffe.apiweb.repository;
+
+import com.catffe.apiweb.model.VentasModel;
+import com.catffe.apiweb.model.VentasPorDia;
+import org.springframework.data.mongodb.repository.Aggregation;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.Date;
+import java.util.List;
+
+
+public interface IVentasRepository extends MongoRepository<VentasModel, Integer> {
+
+}
+
+
+//IVentasService
+package com.catffe.apiweb.service;
+
+import com.catffe.apiweb.model.VentasModel;
+import com.catffe.apiweb.model.VentasPorDia;
+import org.bson.types.ObjectId;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface IVentasService {
+
+    String insertVenta(VentasModel venta);
+
+    List<VentasModel> listVentas();
+
+    Optional<VentasModel> obtenerVentaPorId(ObjectId id);
+
+    void eliminarVentaPorId(ObjectId id);
+
+    List<VentasPorDia> getVentasAgrupadasPorDia();
+}
+
+
+//VentaServiceImp
+    @Override
+    public List<VentasPorDia> getVentasAgrupadasPorDia() {
+        // Agregación para agrupar ventas por día.
+        Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.project()
+                        .andExpression("year(fecha_hora)").as("year")
+                        .andExpression("month(fecha_hora)").as("month")
+                        .andExpression("dayOfMonth(fecha_hora)").as("day")
+                        .and("fecha_hora").as("venta"),
+                Aggregation.group(fields().and("year").and("month").and("day"))
+                        .push("venta").as("ventas"),
+                Aggregation.sort(Sort.Direction.ASC, "_id.year", "_id.month", "_id.day")
+        );
+
+        AggregationResults<Map> results = mongoTemplate.aggregate(aggregation, "venta", Map.class);
+        List<Map> mappedResults = results.getMappedResults();
+
+        List<VentasPorDia> ventasPorDiaList = new ArrayList<>();
+
+        for (Map result : mappedResults) {
+            Map<String, Object> id = (Map<String, Object>) result.get("_id");
+            Date fecha = new GregorianCalendar(
+                    (int) id.get("year"),
+                    (int) id.get("month") - 1,  // Meses en Java comienzan desde 0
+                    (int) id.get("day")
+            ).getTime();
+
+            List<VentasModel> ventas = (List<VentasModel>) result.get("ventas");
+            ventasPorDiaList.add(new VentasPorDia(fecha, ventas));
+        }
+
+        return ventasPorDiaList;
+    }
 
 
