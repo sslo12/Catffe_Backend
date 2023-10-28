@@ -41,6 +41,10 @@ By: Santiago Valencia Rosero, Paola Andrea Chaux.
 By:  Vanessa Suarez, Juan Camilo Buitrago
 3. Realizar una consulta que permita recuperar todas las ventas realizadas en un día. La información que se deberá ser visualizada es: código de la venta, funcionario que la gestionó, cliente que la realizó, monto y detalles de la venta (producto y cantidades).
 
+    @GetMapping("/todas/listar")
+    public ResponseEntity<List<VentasModel>> listarVentas(){
+        return new ResponseEntity<List<VentasModel>>(ventasService.listarVentas(), HttpStatus.OK);
+    }
 
 
 
