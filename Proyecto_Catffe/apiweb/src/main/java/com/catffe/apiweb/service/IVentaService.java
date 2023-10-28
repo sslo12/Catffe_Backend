@@ -4,12 +4,16 @@ import com.catffe.apiweb.model.VentasModel;
 
 import java.util.List;
 import java.util.Optional;
+
 public interface IVentaService {
-    String crearVenta(VentasModel ventas);
+    String insertVenta(VentasModel venta);
+
     List<VentasModel> listarVentas();
 
-    Optional<VentasModel> obtenerVentaPorId(int ventasId);
+    List<VentasModel> obtenerVentasPorTrabajador(int trabajadorId);
 
-    String eliminarVentaPorId(int ventasId);
+    Optional<VentasModel> obtenerVentaPorId(int ventaID);
+
+    String eliminarVentaPorId(int venta);
 
 }
