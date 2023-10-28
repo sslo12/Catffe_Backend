@@ -14,9 +14,20 @@ import java.util.Date;
 @NoArgsConstructor
 public class VentasModel {
     @Id
-    private int id_venta;
-    private Date fecha_hora;
-    private int cliente_id;
-    private int trabajador_id;
+    private String id;
+    private Date fechaHora;
+    private int clienteId;
+    @JsonProperty("trabajadorId")
+    private int trabajadorId;
     private double precio_total;
+    private List<DetalleVenta> detalles;
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static
+    class DetalleVenta {
+        private int id_producto;
+        private String nombre;
+        private int cantidad;
+    }
 }
