@@ -23,71 +23,33 @@ public class VentasController {
     @Autowired
     IProductosService productosService;
 
+    private final IVentasService ventasService;
+
+    @Autowired
+    public VentasController(IVentasService ventasService) {
+        this.ventasService = ventasService;
+    }
+
     @PostMapping("/insert")
-    public ResponseEntity<String> crearVenta(@RequestBody VentasDTO ventadto) {
-        VentasModel ventas = new VentasModel();
-        //ventas.setId_venta(ventadto.getId_venta());
-        Date fecha_hora = new Date();
-        ventas.setCliente_id(ventadto.getCliente_id());
-        ventas.setTrabajador_id(ventadto.getTrabajador_id());
-
-        // Validar la existencia y disponibilidad del producto
-        List<Map<String, Integer>> detalles = ventadto.getDetalles();
-        for (Map<String, Integer> item : detalles) {
-            int idProducto = item.get("id_producto");
-            int cantidadSolicitada = item.get("cantidad");
-
-            ProductosModel producto = this.productosService.obtenerProductoPorId(idProducto).orElse(null);
-            if (producto == null) {
-                return new ResponseEntity<String>("Producto no encontrado para el ID proporcionado", HttpStatus.BAD_REQUEST);
-            }
-
-            if (cantidadSolicitada > producto.getCantidad_dispo()) {
-                return new ResponseEntity<String>("Cantidad insuficiente del producto en stock", HttpStatus.BAD_REQUEST);
-            }
-
-            // Resto de la lógica de procesamiento de ventas
-            int CantidadActual = producto.getCantidad_dispo();
-            double productoPrecio = producto.getPrecio();
-
-            producto.setCantidad_dispo(CantidadActual - cantidadSolicitada);
-            productosService.actualizarProducto(producto);
-
-            double totalPrecioProducto = productoPrecio * cantidadSolicitada;
-
-            double TotalPrecioActual = ventadto.getPrecio_total();
-            ventadto.setPrecio_total(TotalPrecioActual + totalPrecioProducto);
-            ventadto.setPrecio_total(ventadto.getPrecio_total());
-
-            ProductosModel nuevodetalle = new ProductosModel();
-            nuevodetalle.setId(idProducto);
-            nuevodetalle.setCantidad_dispo(CantidadActual);
-        }
-
-        // Insertar el objeto ventas en la colección "venta"
-        ventaService.crearVenta(ventas);
-        return new ResponseEntity<String>("La venta se ha creado con éxito", HttpStatus.OK);
+    public String insertVenta(@RequestBody VentasModel venta) {
+        ventasService.insertVenta(venta);
+        // Puedes realizar alguna validación de datos si es necesario antes de guardar
+        // Luego, llama al servicio para guardar la venta
+        return ventasService.insertVenta(venta);
     }
-
+    
     @GetMapping("/todas/listar")
-    public ResponseEntity<List<VentasModel>>listarVentas(){
-        return new ResponseEntity<List<VentasModel>>(ventaService.listarVentas(),HttpStatus.OK);
+    public ResponseEntity<List<VentasModel>> listarVentas(){
+        return new ResponseEntity<List<VentasModel>>(ventasService.listarVentas(), HttpStatus.OK);
     }
 
-    @GetMapping ("/find/{id}")
-    public ResponseEntity<VentasModel>obtenerVentaPorId(@PathVariable int id){
-        VentasModel ventas = ventaService.obtenerVentaPorId(id).
-                orElseThrow(()->new RecursoNoEncontradoException("Error: no se encontró la venta con el ID " +id));
-
-        return ResponseEntity.ok(ventas);
-    }
-
-    @DeleteMapping ("/delete/{id}")
-    public ResponseEntity<String>eliminarVentaPorId(@PathVariable int id){
-        VentasModel venta = ventaService.obtenerVentaPorId(id).
-                orElseThrow(()-> new RecursoNoEncontradoException("Error: no se encontró la venta con el ID " +id));
-
-        return new ResponseEntity<String>(ventaService.eliminarVentaPorId(venta.getId_venta()),HttpStatus.OK);
+    @GetMapping("/porTrabajador/{trabajadorId}")
+    public ResponseEntity<List<VentasModel>> obtenerVentasPorTrabajador(@PathVariable int trabajadorId) {
+        List<VentasModel> ventas = ventasService.obtenerVentasPorTrabajador(trabajadorId);
+        if(ventas.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(ventas, HttpStatus.OK);
     }
 
 }
